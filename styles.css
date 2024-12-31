@@ -1,0 +1,405 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #2a4858);
+    background-image: url('https://i.imgur.com/8RqPB1Z.png'), linear-gradient(135deg, #1a2a6c, #2a4858);
+    background-repeat: repeat;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#newYearText {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 6em;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 5px;
+    -webkit-text-stroke: 2px #fff;
+    line-height: 1.2;
+}
+
+/* Анимация изменения цвета */
+@keyframes colorChange {
+    0% { color: #ff0000; }
+    25% { color: #00ff00; }
+    50% { color: #0000ff; }
+    75% { color: #ffff00; }
+    100% { color: #ff0000; }
+}
+
+/* Анимация масштабирования */
+@keyframes scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Анимация движения вверх-вниз */
+@keyframes moveUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Добавляем конфетти вокруг текста */
+#newYearText::before,
+#newYearText::after {
+    content: '🎉';
+    position: absolute;
+    font-size: 0.5em;
+    animation: confetti 2s ease-in-out infinite;
+}
+
+#newYearText::before {
+    left: -50px;
+    animation-delay: 0.5s;
+}
+
+#newYearText::after {
+    right: -50px;
+    animation-delay: 0.2s;
+}
+
+@keyframes confetti {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.5; }
+    100% { transform: translateY(0) rotate(360deg); opacity: 1; }
+}
+
+/* Добавляем мерцающую обводку */
+@keyframes textStroke {
+    0%, 100% {
+        -webkit-text-stroke: 2px #ff4da6;
+    }
+    50% {
+        -webkit-text-stroke: 2px #00ff88;
+    }
+}
+
+#newYearText {
+    -webkit-text-stroke: 2px #ff4da6;
+    animation: colorChange 4s linear infinite,
+               scale 2s ease-in-out infinite,
+               moveUpDown 3s ease-in-out infinite,
+               textStroke 4s ease-in-out infinite;
+}
+
+/* Добавляем падающий снег */
+body::before {
+    content: '';
+    position: fixed;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 10px);
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"%3E%3Ccircle fill="%23fff" cx="10" cy="10" r="3"/%3E%3C/svg%3E');
+    animation: snow 10s linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+@keyframes snow {
+    0% {
+        background-position: 0px 0px;
+    }
+    100% {
+        background-position: 500px 1000px;
+    }
+}
+
+/* Стили для ёлочек */
+.container::before,
+.container::after {
+    content: '';
+    position: fixed;
+    bottom: 20%;
+    width: 120px;
+    height: 200px;
+    background: none;
+    filter: drop-shadow(0 0 10px rgba(45, 90, 39, 0.5));
+    animation: treeSwing 3s ease-in-out infinite;
+    transform-origin: bottom center;
+}
+
+/* Три яруса ёлки */
+.container::before,
+.container::after {
+    &::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 60px solid transparent;
+        border-right: 60px solid transparent;
+        border-bottom: 80px solid #2d5a27;
+        bottom: 0;
+        left: 0;
+        animation: treeLights 2s ease-in-out infinite;
+    }
+
+    &::after {
+        content: '🎄';
+        position: absolute;
+        font-size: 100px;
+        bottom: 0;
+        left: 10px;
+        animation: treeLights 2s ease-in-out infinite alternate;
+        text-shadow: 
+            0 0 5px rgba(255, 255, 0, 0.8),
+            0 0 10px rgba(255, 0, 0, 0.8),
+            0 0 15px rgba(0, 255, 0, 0.8);
+    }
+}
+
+/* Огоньки на ёлке */
+.tree-lights {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    &::before {
+        content: '✨';
+        position: absolute;
+        font-size: 10px;
+        animation: lightsTwinkle 1s ease-in-out infinite;
+    }
+}
+
+.tree-lights:nth-child(1) { left: 20%; top: 30%; animation-delay: 0.2s; }
+.tree-lights:nth-child(2) { left: 40%; top: 50%; animation-delay: 0.4s; }
+.tree-lights:nth-child(3) { left: 60%; top: 40%; animation-delay: 0.6s; }
+.tree-lights:nth-child(4) { left: 80%; top: 60%; animation-delay: 0.8s; }
+
+/* Анимация покачивания ёлки */
+@keyframes treeSwing {
+    0% { transform: rotate(-2deg) scale(1); }
+    50% { transform: rotate(2deg) scale(1.02); }
+    100% { transform: rotate(-2deg) scale(1); }
+}
+
+/* Анимация огоньков */
+@keyframes treeLights {
+    0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 5px gold)
+                drop-shadow(0 0 10px rgba(255, 0, 0, 0.5))
+                drop-shadow(0 0 15px rgba(0, 255, 0, 0.5));
+    }
+    50% {
+        filter: brightness(1.3) drop-shadow(0 0 10px gold)
+                drop-shadow(0 0 15px rgba(255, 0, 0, 0.8))
+                drop-shadow(0 0 20px rgba(0, 255, 0, 0.8));
+    }
+}
+
+/* Анимация мерцания огоньков */
+@keyframes lightsTwinkle {
+    0%, 100% { 
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Позиционирование ёлок */
+.container::before {
+    left: 10%;
+}
+
+.container::after {
+    right: 10%;
+}
+
+/* Анимация свечения ёлок */
+@keyframes treeGlow {
+    0%, 100% {
+        filter: brightness(1) drop-shadow(0 0 5px rgba(45, 90, 39, 0.5));
+    }
+    50% {
+        filter: brightness(1.2) drop-shadow(0 0 15px rgba(45, 90, 39, 0.8));
+    }
+}
+
+/* Анимация звезды */
+@keyframes starTwinkle {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Анимация качания */
+@keyframes swing {
+    0%, 100% {
+        transform: rotate(-3deg);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+/* Добавляем мерцающие звезды */
+.star {
+    position: fixed;
+    color: yellow;
+    font-size: 20px;
+    animation: twinkle 1.5s ease-in-out infinite;
+}
+
+.star:nth-child(1) { top: 20%; left: 20%; animation-delay: 0.3s; }
+.star:nth-child(2) { top: 30%; right: 25%; animation-delay: 0.7s; }
+.star:nth-child(3) { top: 15%; left: 50%; animation-delay: 0.1s; }
+.star:nth-child(4) { top: 40%; right: 40%; animation-delay: 0.5s; }
+
+/* Анимация мерцания звезд */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Анимация подпрыгивания текста */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Стили для салюта */
+.firework {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: firework-animation 2s ease-out forwards;
+}
+
+/* Создаем несколько салютов с разными позициями */
+.firework:nth-child(1) { left: 20%; top: 60%; animation-delay: 0s; }
+.firework:nth-child(2) { left: 40%; top: 40%; animation-delay: 0.5s; }
+.firework:nth-child(3) { right: 30%; top: 50%; animation-delay: 1s; }
+.firework:nth-child(4) { right: 20%; top: 30%; animation-delay: 1.5s; }
+
+/* Анимация салюта */
+@keyframes firework-animation {
+    0% {
+        transform: translateY(100vh);
+        background: #fff;
+        box-shadow: 0 0 2px #fff;
+    }
+    50% {
+        transform: translateY(20vh);
+    }
+    60%, 100% {
+        transform: translateY(20vh);
+        background: transparent;
+        box-shadow: 
+            -120px -120px #ff0000,
+            120px -120px #00ff00,
+            120px 120px #0000ff,
+            -120px 120px #ffff00,
+            -60px -60px #ff00ff,
+            60px -60px #00ffff,
+            60px 60px #ff8800,
+            -60px 60px #8800ff,
+            0px -100px #ff0088,
+            100px 0px #0088ff,
+            0px 100px #88ff00,
+            -100px 0px #ff8800;
+    }
+}
+
+/* Стили для букв */
+.letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) rotateX(-90deg);
+    transform-origin: 50% 50%;
+    text-shadow: 
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px #e60073,
+        0 0 40px #e60073;
+    font-size: 1.2em;
+    margin: 0 5px;
+}
+
+/* Анимация для букв */
+.bounce-letter {
+    animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-200px) scale(0);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(30px) scale(1.1);
+    }
+    70% {
+        opacity: 0.7;
+        transform: translateY(-15px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Стиль для дефиса */
+.dash {
+    font-size: 0.8em;
+    color: #fff !important;
+    text-shadow: none;
+    opacity: 0;
+    animation: dashAppear 0.5s forwards;
+}
+
+/* Анимация для дефиса */
+@keyframes dashAppear {
+    0% {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scaleX(1);
+    }
+}
+
+/* Добавляем эффект свечения для каждой буквы */
+.bounce-letter::after {
+    content: '✨';
+    position: absolute;
+    font-size: 0.3em;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: sparkle 1.5s ease-in-out infinite;
+    opacity: 0;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: translateX(-50%) translateY(0) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-50%) translateY(-20px) scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-40px) scale(0);
+        opacity: 0;
+    }
+}
