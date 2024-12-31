@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const text = "С НОВЫМ ГОДОМ БРО!";
+    const text = "С НОВЫМ ГОДОМ!";
     const newYearText = document.getElementById('newYearText');
     
     // Очищаем содержимое текста
